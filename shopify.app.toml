@@ -1,0 +1,68 @@
+# Threxa — Shopify app configuration
+# Most fields (client_id, application_url, redirect URLs) are filled in
+# automatically by `shopify app config link` / `shopify app dev`.
+
+name = "Threxa"
+handle = "threxa"
+client_id = ""
+application_url = "https://example.com"
+embedded = true
+
+[access_scopes]
+# Scopes map to Threxa's four automations:
+#   Tally reconciliation : read_orders, read_products, read_customers
+#   WhatsApp COD         : read_orders, write_orders, read_customers
+#   Returns management    : read_returns, write_returns, read_fulfillments
+#   Inventory sync        : read_inventory, write_inventory, read_locations
+# NOTE: read_customers is "protected customer data" — requires extra approval
+# in the Partner Dashboard before the app can go live. See README "Compliance".
+scopes = "read_orders,write_orders,read_products,read_inventory,write_inventory,read_customers,read_locations,read_fulfillments,read_returns,write_returns"
+
+[auth]
+redirect_urls = [ "https://example.com/auth/callback" ]
+
+[webhooks]
+api_version = "2025-10"
+
+  # --- Lifecycle (handled by template routes) ---
+  [[webhooks.subscriptions]]
+  topics = [ "app/uninstalled" ]
+  uri = "/webhooks/app/uninstalled"
+
+  [[webhooks.subscriptions]]
+  topics = [ "app/scopes_update" ]
+  uri = "/webhooks/app/scopes_update"
+
+  # --- Threxa automations (each has a matching route handler) ---
+  # COD verification + Tally voucher creation
+  [[webhooks.subscriptions]]
+  topics = [ "orders/create" ]
+  uri = "/webhooks/orders/create"
+
+  # Inventory sync (real-time, webhook-driven — avoids the batch-lag overselling
+  # that competitors get bad reviews for)
+  [[webhooks.subscriptions]]
+  topics = [ "inventory_levels/update" ]
+  uri = "/webhooks/inventory/update"
+
+  # --- Mandatory GDPR / privacy compliance (required for App Store) ---
+  [[webhooks.subscriptions]]
+  uri = "/webhooks/customers/data_request"
+  compliance_topics = [ "customers/data_request" ]
+
+  [[webhooks.subscriptions]]
+  uri = "/webhooks/customers/redact"
+  compliance_topics = [ "customers/redact" ]
+
+  [[webhooks.subscriptions]]
+  uri = "/webhooks/shop/redact"
+  compliance_topics = [ "shop/redact" ]
+
+# Add these as you implement each automation's backend (don't declare a
+# subscription before its handler route exists, or Shopify logs 404s):
+#   orders/updated, orders/cancelled, refunds/create  -> Tally + returns
+#   products/create, products/update                  -> inventory sync
+#   returns/request, returns/approve                  -> returns workflow
+
+[pos]
+embedded = false
