@@ -160,5 +160,5 @@ See `docs/app-store-listing.md` for:
 
 ## Support
 
-Sachin Kalaiselvan · sachin@theingredientlist.co · +91 74839 92418 (WhatsApp)  
+Sachin Kalaiselvan · sachin@theingredientlist.co  
 theingredientlist.co · threxa.theingredientlist.co
