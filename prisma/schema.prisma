@@ -1,0 +1,119 @@
+// Threxa Prisma schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:dev.sqlite"
+}
+
+model Session {
+  id            String    @id
+  shop          String
+  state         String
+  isOnline      Boolean   @default(false)
+  scope         String?
+  expires       DateTime?
+  accessToken   String
+  userId        BigInt?
+  firstName     String?
+  lastName      String?
+  email         String?
+  accountOwner  Boolean   @default(false)
+  locale        String?
+  collaborator  Boolean?  @default(false)
+  emailVerified Boolean?  @default(false)
+  refreshToken        String?
+  refreshTokenExpires DateTime?
+}
+
+// Per-automation configuration + on/off, one row per (shop, automation).
+model AutomationConfig {
+  id         String   @id @default(cuid())
+  shop       String
+  automation String // "tally" | "whatsapp" | "returns" | "inventory"
+  enabled    Boolean  @default(false)
+  config     String   @default("{}") // JSON blob
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([shop, automation])
+}
+
+// Append-only audit trail. Directly answers the "app silently changed things /
+// stopped working" complaints — every action is visible with its source.
+model AuditLog {
+  id         String   @id @default(cuid())
+  shop       String
+  automation String
+  event      String // "order.created", "voucher.pushed", "inventory.synced"...
+  status     String // "success" | "failed" | "pending" | "skipped"
+  message    String?
+  refId      String? // order id, inventory item id, return id
+  source     String   @default("webhook") // "webhook" | "manual" | "retry"
+  createdAt  DateTime @default(now())
+
+  @@index([shop, automation, createdAt])
+}
+
+// Rolled-up health per automation, used by the dashboard + alerting.
+model AutomationHealth {
+  id            String    @id @default(cuid())
+  shop          String
+  automation    String
+  status        String    @default("idle") // "healthy" | "degraded" | "down" | "idle"
+  lastRunAt     DateTime?
+  lastSuccessAt DateTime?
+  lastFailureAt DateTime?
+  failures24h   Int       @default(0)
+  updatedAt     DateTime  @updatedAt
+
+  @@unique([shop, automation])
+}
+
+// Durable job queue (DB-backed so it survives restarts). Retried with backoff.
+model Job {
+  id          String   @id @default(cuid())
+  shop        String
+  automation  String
+  type        String // "tally.pushVoucher", "whatsapp.verifyCod", ...
+  payload     String   @default("{}") // JSON
+  status      String   @default("pending") // pending | processing | done | failed
+  attempts    Int      @default(0)
+  maxAttempts Int      @default(5)
+  runAt       DateTime @default(now())
+  lastError   String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([status, runAt])
+}
+
+// Billing state mirrored from Shopify so the UI can gate features instantly.
+model Subscription {
+  id        String   @id @default(cuid())
+  shop      String   @unique
+  plan      String // "launch" | "growth" | "pro"
+  status    String // "active" | "pending" | "cancelled" | "frozen"
+  chargeId  String?
+  test      Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// The only customer PII Threxa stores (phone for WhatsApp, contact for returns).
+// Kept minimal and isolated so GDPR redact/export are trivial and auditable.
+model CustomerContact {
+  id         String   @id @default(cuid())
+  shop       String
+  customerId String
+  phone      String?
+  email      String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([shop, customerId])
+  @@index([shop])
+}
