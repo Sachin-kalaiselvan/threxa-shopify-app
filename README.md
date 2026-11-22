@@ -1,41 +1,34 @@
-# Threxa — Shopify App
+# threxa-shopify-app
 
-D2C automation for Indian Shopify brands.  
-Four modules: **Tally reconciliation · WhatsApp COD · Returns management · Inventory sync**
+d2c automation for indian shopify brands. four modules: **tally reconciliation**, **whatsapp COD confirmation**, **returns**, **inventory sync**.
 
----
-
-## Quick start
+## quick start
 
 ```bash
 npm install
-shopify auth login          # select your org + dev store
-cp .env.example .env        # fill in SHOPIFY_API_KEY + SHOPIFY_API_SECRET
+shopify auth login          # pick your org + dev store
+cp .env.example .env        # SHOPIFY_API_KEY + SHOPIFY_API_SECRET
 npm run setup               # prisma generate + migrate
-npm run dev                 # shopify app dev → installs on dev store + opens browser
+npm run dev                 # shopify app dev, installs on the dev store + opens the browser
 ```
 
-`shopify app dev` auto-fills `client_id`, `application_url`, and `redirect_urls` in `shopify.app.toml`.
+`shopify app dev` fills in `client_id`, `application_url`, `redirect_urls` in `shopify.app.toml` for you.
 
----
+## env
 
-## Environment variables
-
-| Variable | Required | Description |
+| var | needed for | what |
 |---|---|---|
-| `SHOPIFY_API_KEY` | ✅ | From Partner Dashboard |
-| `SHOPIFY_API_SECRET` | ✅ | From Partner Dashboard |
-| `SHOPIFY_APP_URL` | ✅ | Auto-set by `shopify app dev`; set manually in prod |
-| `SCOPES` | ✅ | Copy from `.env.example` |
-| `CRON_SECRET` | ✅ | Bearer token for `POST /cron/process-jobs` |
-| `WHATSAPP_TOKEN` | WhatsApp module | Meta Cloud API token |
-| `WHATSAPP_PHONE_ID` | WhatsApp module | Phone number ID |
-| `TALLY_BRIDGE_URL` | Tally module | Fallback if not set per-shop in UI |
-| `SHIPROCKET_TOKEN` | Returns module | Shiprocket JWT |
+| `SHOPIFY_API_KEY` | always | partner dashboard |
+| `SHOPIFY_API_SECRET` | always | partner dashboard |
+| `SHOPIFY_APP_URL` | always | auto-set by `shopify app dev`, set it yourself in prod |
+| `SCOPES` | always | copy from `.env.example` |
+| `CRON_SECRET` | always | bearer token for `POST /cron/process-jobs` |
+| `WHATSAPP_TOKEN` | whatsapp | meta cloud API token |
+| `WHATSAPP_PHONE_ID` | whatsapp | phone number id |
+| `TALLY_BRIDGE_URL` | tally | fallback if a shop hasn't set one in the UI |
+| `SHIPROCKET_TOKEN` | returns | shiprocket JWT |
 
----
-
-## Project layout
+## layout
 
 ```
 app/
@@ -87,78 +80,48 @@ docs/
   app-store-listing.md              Listing copy + screenshots guide + submission checklist
 ```
 
----
+## jobs + retries
 
-## Job queue and retry
+webhooks drop jobs into the `Job` table. `processDueJobs()` runs inline after each webhook (fine at low volume), and `POST /cron/process-jobs` is there for a scheduler.
 
-Webhooks enqueue jobs into the `Job` table. `processDueJobs()` runs inline after each webhook for low volume, and is also available at `POST /cron/process-jobs` for a scheduler.
+failed jobs back off 30s → 60s → 2m → 4m → 8m → give up. every attempt writes an `AuditLog` row. health is worked out from actual failure counts, not some counter that drifts.
 
-Failed jobs retry with exponential backoff (30s → 60s → 2m → 4m → 8m → permanent fail). Every attempt writes an `AuditLog` row. Health is recalculated from real failure counts, not a drifting counter.
+## adding an integration
 
----
+1. handler in `app/services/` taking `(shop, payload)` and returning `HandlerResult`
+2. register it in `HANDLERS` in `queue.server.ts`
+3. `enqueue({ type: "your.handler", ... })` from the webhook route
+4. add the webhook subscription to `shopify.app.toml`
 
-## Adding a new integration
-
-1. Add a handler to `app/services/` that accepts `(shop, payload)` and returns `HandlerResult`
-2. Register the handler in the `HANDLERS` map in `queue.server.ts`
-3. Call `enqueue({ type: "your.handler", ... })` from the relevant webhook route
-4. Add the webhook subscription to `shopify.app.toml`
-
----
-
-## Scripts
+## scripts
 
 ```bash
 npm run dev          # shopify app dev
 npm run build        # react-router build (client + server)
-npm run typecheck    # react-router typegen + tsc --noEmit
-npm run lint         # eslint
-npm test             # vitest (11 tests)
+npm run typecheck    # typegen + tsc --noEmit
+npm run lint
+npm test             # vitest, 11 tests
 npm run setup        # prisma generate + migrate deploy
-npm run deploy       # shopify app deploy (App Store)
+npm run deploy       # shopify app deploy
 ```
 
----
+typecheck, lint, build and all 11 tests pass. the live shopify dev loop + prisma's runtime engine need your creds / network, so run `npm run dev` and `npm run setup` yourself.
 
-## Verified gates
+## deploying
 
-| Gate | Status |
-|---|---|
-| `npm run typecheck` | ✅ clean |
-| `npm run lint` | ✅ clean |
-| `npm run build` | ✅ client + server bundles built |
-| `npm test` | ✅ 11/11 pass |
-| Live Shopify dev loop | requires your credentials (run `npm run dev`) |
-| Prisma runtime engine | requires network (run `npm run setup`) |
+render, railway or fly all work (node + sqlite or postgres).
 
----
+1. push to github
+2. connect the host, set env from `.env.example`
+3. build: `npm run setup && npm run build`
+4. start: `npm run start`
+5. `SHOPIFY_APP_URL` = your public domain
+6. `shopify app config link` to put the live url in `shopify.app.toml`
 
-## Deployment
+for prod swap sqlite for postgres: `schema.prisma` datasource → `postgresql`, update `DATABASE_URL`.
 
-Recommended hosts: **Render, Railway, Fly.io** (all support Node + SQLite or Postgres).
+## app store
 
-1. Push to GitHub
-2. Connect to your host, set environment variables from `.env.example`
-3. Build command: `npm run setup && npm run build`
-4. Start command: `npm run start`
-5. Set `SHOPIFY_APP_URL` to your host's public domain
-6. Run `shopify app config link` to update `shopify.app.toml` with the live URL
+`docs/app-store-listing.md` has the listing copy, which 6 screenshots to take, and the pre-submission checklist. the protected data (`read_customers`) approval takes a while, **start it 2–4 weeks before you submit**.
 
-For production, swap SQLite for Postgres by changing `schema.prisma` datasource to `postgresql` and updating `DATABASE_URL`.
-
----
-
-## App Store submission
-
-See `docs/app-store-listing.md` for:
-- Full listing copy (description, tagline, key benefits)
-- Screenshot guide (6 screenshots, what to show in each)
-- Pre-submission checklist (technical, compliance, legal, billing)
-- Protected data (`read_customers`) approval instructions — **start this 2–4 weeks before you plan to submit**
-
----
-
-## Support
-
-Sachin Kalaiselvan · sachin@theingredientlist.co  
-theingredientlist.co · threxa.theingredientlist.co
+sachin · sachin@theingredientlist.co · threxa.theingredientlist.co
