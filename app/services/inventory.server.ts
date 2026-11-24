@@ -1,6 +1,6 @@
 import type { HandlerResult } from "./types";
 
-// Normalise a SKU before matching across channels — case + whitespace
+// Normalise a SKU before matching across channels - case + whitespace
 // differences are the most common cause of silent sync mismatches.
 export function normalizeSku(sku: string): string {
   return sku.trim().toLowerCase();

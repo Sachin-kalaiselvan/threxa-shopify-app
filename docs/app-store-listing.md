@@ -1,12 +1,12 @@
-# Threxa — Shopify App Store Listing
+# Threxa - Shopify App Store Listing
 
 ---
 
 ## App name
-Threxa — D2C Automation for Indian Brands
+Threxa - D2C Automation for Indian Brands
 
 ## Tagline (≤ 100 chars)
-Tally sync, WhatsApp COD, returns & inventory — built for Indian D2C.
+Tally sync, WhatsApp COD, returns & inventory - built for Indian D2C.
 
 ---
 
@@ -19,7 +19,7 @@ Automate reconciliation into Tally Prime, verify COD orders on WhatsApp, manage 
 
 ### Stop doing manually what Threxa does automatically
 
-Threxa bundles the four operations that consume the most time in a growing Indian D2C store — and delivers them as a single, flat-INR-priced Shopify app.
+Threxa bundles the four operations that consume the most time in a growing Indian D2C store - and delivers them as a single, flat-INR-priced Shopify app.
 
 ---
 
@@ -28,12 +28,12 @@ Every paid order and refund becomes a GST-ready sales voucher in Tally Prime wit
 
 - Supports Tally Prime (and ERP9 via the same bridge)
 - Pushes 42+ data points including tax breakdowns
-- Every push is logged — if something fails, you know immediately and it retries automatically
+- Every push is logged - if something fails, you know immediately and it retries automatically
 
 ---
 
 #### WhatsApp COD verification
-Threxa uses the **official WhatsApp Business Cloud API** — never device-linking. Competitors that link devices get their merchants' numbers permanently banned by Meta. Threxa doesn't.
+Threxa uses the **official WhatsApp Business Cloud API** - never device-linking. Competitors that link devices get their merchants' numbers permanently banned by Meta. Threxa doesn't.
 
 - Sends a verification message the moment a COD order is placed
 - Sends a reminder at a configurable interval (default: 15 minutes)
@@ -43,7 +43,7 @@ Threxa uses the **official WhatsApp Business Cloud API** — never device-linkin
 ---
 
 #### Returns management
-A branded self-service returns portal your customers reach from your store. Exchange-first flow to retain revenue. Pickup integrations with Shiprocket, Delhivery, and Blue Dart — the three largest India return couriers.
+A branded self-service returns portal your customers reach from your store. Exchange-first flow to retain revenue. Pickup integrations with Shiprocket, Delhivery, and Blue Dart - the three largest India return couriers.
 
 - Customer raises return → courier pickup auto-created
 - Restock is idempotent: processed exactly once, no duplicate inventory additions
@@ -52,7 +52,7 @@ A branded self-service returns portal your customers reach from your store. Exch
 ---
 
 #### Inventory sync
-Webhook-driven, real-time sync. Not hourly batches — the moment an order is placed or cancelled, stock is updated. SKUs are normalised before matching so case differences and extra whitespace never cause a silent mismatch.
+Webhook-driven, real-time sync. Not hourly batches - the moment an order is placed or cancelled, stock is updated. SKUs are normalised before matching so case differences and extra whitespace never cause a silent mismatch.
 
 - Configurable safety-stock buffer to prevent overselling on flash sales
 - Full audit trail: every change logged with its source
@@ -61,7 +61,7 @@ Webhook-driven, real-time sync. Not hourly batches — the moment an order is pl
 ---
 
 ### Pricing
-Flat INR pricing — no per-order fees, no per-message fees, no surprise charges at month end.
+Flat INR pricing - no per-order fees, no per-message fees, no surprise charges at month end.
 
 | Plan | Price | For |
 |---|---|---|
@@ -72,20 +72,20 @@ Flat INR pricing — no per-order fees, no per-message fees, no surprise charges
 ---
 
 ### Support
-Founder-led support. Reply within the same business day (IST).  
-WhatsApp: +91 74839 92418  
-Email: sachin@theingredientlist.co  
+Founder-led support. Reply within the same business day (IST).
+WhatsApp: +91 74839 92418
+Email: sachin@theingredientlist.co
 Docs: https://threxa.theingredientlist.co/docs
 
 ---
 
 ## Key benefits (bullet list for the App Store)
 - GST-ready Tally vouchers created automatically on every order
-- COD verification via official WhatsApp API — no Meta bans
+- COD verification via official WhatsApp API - no Meta bans
 - Returns portal with Shiprocket, Delhivery, Blue Dart pickups
 - Real-time inventory sync with safety-stock buffer to stop overselling
-- Full audit log — you always know what ran, when, and whether it succeeded
-- Flat INR pricing — no surprise USD usage fees
+- Full audit log - you always know what ran, when, and whether it succeeded
+- Flat INR pricing - no surprise USD usage fees
 - Same-day support from the founder
 
 ---
@@ -99,12 +99,12 @@ Docs: https://threxa.theingredientlist.co/docs
 
 ## Screenshots needed (take these on your dev store)
 
-1. **Home dashboard** — automation cards showing Active/Set up badges, system health panel, overview metrics (orders, products, active count)
-2. **Tally page** — config form with enable toggle, company name, bridge URL, voucher type
-3. **WhatsApp page** — official API banner, enable toggle, reminder/auto-cancel config
-4. **Returns page** — courier selector (Shiprocket / Delhivery / Blue Dart), window config
-5. **Inventory page** — safety-stock buffer field, safeguards aside panel
-6. **Settings page** — three INR plan cards side by side with "Choose" buttons
+1. **Home dashboard** - automation cards showing Active/Set up badges, system health panel, overview metrics (orders, products, active count)
+2. **Tally page** - config form with enable toggle, company name, bridge URL, voucher type
+3. **WhatsApp page** - official API banner, enable toggle, reminder/auto-cancel config
+4. **Returns page** - courier selector (Shiprocket / Delhivery / Blue Dart), window config
+5. **Inventory page** - safety-stock buffer field, safeguards aside panel
+6. **Settings page** - three INR plan cards side by side with "Choose" buttons
 
 Recommended size: 1600 × 900 px, PNG, light background.
 
@@ -133,7 +133,7 @@ Recommended size: 1600 × 900 px, PNG, light background.
 - [ ] At least one full end-to-end test: place COD order → WhatsApp message → Tally voucher
 - [ ] Cron job configured to drain the retry queue every 5 minutes
 
-### Protected data approval (DO THIS FIRST — can take 2-4 weeks)
+### Protected data approval (DO THIS FIRST - can take 2-4 weeks)
 - [ ] Request `read_customers` approval in Shopify Partner Dashboard
 - [ ] Complete the data-protection questionnaire
 - [ ] Receive approval email before submitting the app
@@ -147,7 +147,7 @@ Recommended size: 1600 × 900 px, PNG, light background.
 - [ ] 6 screenshots uploaded (1600×900 PNG)
 - [ ] App icon uploaded (512×512 PNG, no text, no Shopify logo)
 - [ ] Full description ≤ 2,800 chars (currently within limit)
-- [ ] Tagline ≤ 100 chars ✓
+- [ ] Tagline ≤ 100 chars
 - [ ] Support URL / email filled in
 - [ ] Category set: Orders and shipping + Accounting
 

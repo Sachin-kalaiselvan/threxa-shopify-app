@@ -122,6 +122,6 @@ for prod swap sqlite for postgres: `schema.prisma` datasource → `postgresql`, 
 
 ## app store
 
-`docs/app-store-listing.md` has the listing copy, which 6 screenshots to take, and the pre-submission checklist. the protected data (`read_customers`) approval takes a while, **start it 2–4 weeks before you submit**.
+`docs/app-store-listing.md` has the listing copy, which 6 screenshots to take, and the pre-submission checklist. the protected data (`read_customers`) approval takes a while, **start it 2-4 weeks before you submit**.
 
 sachin · sachin@theingredientlist.co · threxa.theingredientlist.co

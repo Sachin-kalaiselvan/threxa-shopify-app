@@ -1,4 +1,4 @@
-# Threxa — Shopify app configuration
+# Threxa - Shopify app configuration
 # Most fields (client_id, application_url, redirect URLs) are filled in
 # automatically by `shopify app config link` / `shopify app dev`.
 
@@ -14,7 +14,7 @@ embedded = true
 #   WhatsApp COD         : read_orders, write_orders, read_customers
 #   Returns management    : read_returns, write_returns, read_fulfillments
 #   Inventory sync        : read_inventory, write_inventory, read_locations
-# NOTE: read_customers is "protected customer data" — requires extra approval
+# NOTE: read_customers is "protected customer data" - requires extra approval
 # in the Partner Dashboard before the app can go live. See README "Compliance".
 scopes = "read_orders,write_orders,read_products,read_inventory,write_inventory,read_customers,read_locations,read_fulfillments,read_returns,write_returns"
 
@@ -24,7 +24,7 @@ redirect_urls = [ "https://example.com/auth/callback" ]
 [webhooks]
 api_version = "2025-10"
 
-  # --- Lifecycle (handled by template routes) ---
+  # lifecycle (handled by template routes)
   [[webhooks.subscriptions]]
   topics = [ "app/uninstalled" ]
   uri = "/webhooks/app/uninstalled"
@@ -33,19 +33,19 @@ api_version = "2025-10"
   topics = [ "app/scopes_update" ]
   uri = "/webhooks/app/scopes_update"
 
-  # --- Threxa automations (each has a matching route handler) ---
+  # threxa automations (each has a matching route handler)
   # COD verification + Tally voucher creation
   [[webhooks.subscriptions]]
   topics = [ "orders/create" ]
   uri = "/webhooks/orders/create"
 
-  # Inventory sync (real-time, webhook-driven — avoids the batch-lag overselling
+  # Inventory sync (real-time, webhook-driven - avoids the batch-lag overselling
   # that competitors get bad reviews for)
   [[webhooks.subscriptions]]
   topics = [ "inventory_levels/update" ]
   uri = "/webhooks/inventory/update"
 
-  # --- Mandatory GDPR / privacy compliance (required for App Store) ---
+  # mandatory gdpr / privacy compliance (required for app store)
   [[webhooks.subscriptions]]
   uri = "/webhooks/customers/data_request"
   compliance_topics = [ "customers/data_request" ]

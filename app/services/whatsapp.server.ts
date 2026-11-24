@@ -1,7 +1,7 @@
 import type { HandlerResult } from "./types";
 
 // Sends a COD verification message through the OFFICIAL WhatsApp Business
-// Cloud API (graph.facebook.com). Never device-linking — that is what gets
+// Cloud API (graph.facebook.com). Never device-linking - that is what gets
 // competitor apps' numbers banned by Meta.
 export async function sendCodVerification(
   _shop: string,

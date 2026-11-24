@@ -13,7 +13,7 @@ export async function upsertContact(
   });
 }
 
-// GDPR data export — everything Threxa holds for one customer.
+// GDPR data export - everything Threxa holds for one customer.
 export async function exportCustomer(shop: string, customerId: string) {
   const contacts = await db.customerContact.findMany({
     where: { shop, customerId },

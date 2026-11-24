@@ -1,7 +1,7 @@
-# Threxa — Privacy Policy
+# Threxa - Privacy Policy
 
-**Last updated: 27 June 2026**  
-**Data controller: Sachin Kalaiselvan, The Ingredient List, Bengaluru, India**  
+**Last updated: 27 June 2026**
+**Data controller: Sachin Kalaiselvan, The Ingredient List, Bengaluru, India**
 Contact: sachin@theingredientlist.co | +91 74839 92418
 
 ---
@@ -55,10 +55,10 @@ We do not sell any data. We do not use your data for advertising.
 
 We share data only with:
 
-- **Shopify** — to make API calls on your behalf (their privacy policy applies)
-- **WhatsApp Business Platform (Meta)** — customer phone number is sent when you send a verification message (Meta's Cloud API terms apply)
-- **Tally Prime** — order data is sent to the bridge you configure and run on your own machine; Threxa never directly accesses your Tally installation
-- **Shiprocket / Delhivery / Blue Dart** — return pickup data is sent when you enable the returns automation (their respective privacy policies apply)
+- **Shopify** - to make API calls on your behalf (their privacy policy applies)
+- **WhatsApp Business Platform (Meta)** - customer phone number is sent when you send a verification message (Meta's Cloud API terms apply)
+- **Tally Prime** - order data is sent to the bridge you configure and run on your own machine; Threxa never directly accesses your Tally installation
+- **Shiprocket / Delhivery / Blue Dart** - return pickup data is sent when you enable the returns automation (their respective privacy policies apply)
 
 No data is shared with any other third party.
 
@@ -80,10 +80,10 @@ No data is shared with any other third party.
 
 As a merchant you can:
 
-- **Access** — request a copy of all data we hold for your shop
-- **Rectification** — update any config or contact data via the app
-- **Erasure** — delete all app data by uninstalling Threxa; we process the `shop/redact` webhook within 48 hours
-- **Data portability** — on request we will provide your audit log and config in JSON
+- **Access** - request a copy of all data we hold for your shop
+- **Rectification** - update any config or contact data via the app
+- **Erasure** - delete all app data by uninstalling Threxa; we process the `shop/redact` webhook within 48 hours
+- **Data portability** - on request we will provide your audit log and config in JSON
 
 Your customers can exercise their GDPR rights by contacting you as the data controller. When you receive a `customers/data_request` or `customers/redact` webhook from Shopify, Threxa processes it automatically and erases the relevant phone/email record.
 
@@ -108,8 +108,8 @@ We will notify you of material changes via the Shopify admin notification system
 
 ## 9. Contact
 
-**Sachin Kalaiselvan**  
-The Ingredient List  
-Bengaluru, Karnataka, India  
-sachin@theingredientlist.co  
+**Sachin Kalaiselvan**
+The Ingredient List
+Bengaluru, Karnataka, India
+sachin@theingredientlist.co
 +91 74839 92418

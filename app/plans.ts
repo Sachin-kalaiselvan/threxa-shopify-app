@@ -1,4 +1,4 @@
-// Plan identifiers — shared between client UI and server billing config.
+// Plan identifiers - shared between client UI and server billing config.
 // No server-only imports here so this can be imported from both sides.
 export const PLAN_LAUNCH = "Launch" as const;
 export const PLAN_GROWTH = "Growth" as const;

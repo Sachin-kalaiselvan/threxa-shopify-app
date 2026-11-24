@@ -1,6 +1,6 @@
-# Threxa — Terms of Service
+# Threxa - Terms of Service
 
-**Last updated: 27 June 2026**  
+**Last updated: 27 June 2026**
 **Service provider: Sachin Kalaiselvan, The Ingredient List, Bengaluru, India**
 
 ---
@@ -13,10 +13,10 @@ By installing Threxa from the Shopify App Store you agree to these Terms. If you
 
 Threxa provides four automation modules for Shopify merchants:
 
-1. **Tally reconciliation** — pushes orders and refunds to Tally Prime via a bridge you install
-2. **WhatsApp COD verification** — sends OTP / confirmation messages through the official WhatsApp Business Cloud API
-3. **Returns management** — provides a branded returns portal and creates courier pickups
-4. **Inventory sync** — keeps stock levels synchronised in real time via Shopify webhooks
+1. **Tally reconciliation** - pushes orders and refunds to Tally Prime via a bridge you install
+2. **WhatsApp COD verification** - sends OTP / confirmation messages through the official WhatsApp Business Cloud API
+3. **Returns management** - provides a branded returns portal and creates courier pickups
+4. **Inventory sync** - keeps stock levels synchronised in real time via Shopify webhooks
 
 ## 3. Plans and billing
 
